@@ -17,7 +17,7 @@
                 </div>
                 <div class="form-group mt-2">
                     <label for="description">Description</label>
-                    <textarea name="description" rows="3" class="form-control @error('description') is-invalid @enderror" placeholder="Input description location" value="{{ old('description') }}"></textarea>
+                    <textarea name="description" rows="3" class="form-control @error('description') is-invalid @enderror" placeholder="Input description location" value="">{{ old('description') }}</textarea>
                     @error('description')
                     <small class="invalid-feedback">{{ $message }}</small>
                     @enderror

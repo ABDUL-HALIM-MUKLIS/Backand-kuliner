@@ -3,11 +3,11 @@
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.11.5/datatables.min.css"/>
     @endpush
 
-    <x-slot name="title">Data Temat Kuliner</x-slot>
+    <x-slot name="title">Menu Kuliner {{ $place->name }}</x-slot>
 
     <div class="card">
         <div class="card-header">
-            {{-- <a href="{{ route('menus.create') }}" class="btn btn-primary">+ Tambah Tempat Kuliner</a> --}}
+            <a href="{{ route('menu.create', $place) }}" class="btn btn-primary">+ Tambah Menu Kuliner</a>
         </div>
         <div class="card-body">
             <div class="table-responsive">

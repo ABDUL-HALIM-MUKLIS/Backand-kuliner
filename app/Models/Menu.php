@@ -10,6 +10,13 @@ class Menu extends Model
 {
     use HasFactory;
 
+    public function getImageUrlAttribute()
+    {
+        if($this->image){
+            return asset($this->image);
+        }
+    }
+
     public function place(){
         return $this->belongsTo(Place::class);
     }

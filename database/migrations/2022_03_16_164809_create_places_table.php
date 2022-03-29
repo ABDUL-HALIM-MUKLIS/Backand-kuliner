@@ -17,7 +17,7 @@ class CreatePlacesTable extends Migration
             $table->id();
             $table->foreignId('sub_district_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('name');
-            $table->string('descriton');
+            $table->string('description');
             $table->string('address');
             $table->string('phone')->nullable()->default(null);
             $table->string('image')->nullable()->default(null);
