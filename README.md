@@ -253,3 +253,10 @@ public function run()
     php artisan config:cache
     php artisan view:clear
 ```
+
+> STEP 22 Evaluasi
+- Membuat keamanan scop untuk agar user tidak mengotak atik url agar jika user menganti id pada url akan tidak bisa jika id tersebut tidak ada
+
+```php
+    Route::resource('/place/{place}/menu', App\Http\Controllers\PlaceMenuController::class)->scoped();
+``

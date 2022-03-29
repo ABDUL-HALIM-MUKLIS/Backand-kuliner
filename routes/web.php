@@ -25,6 +25,6 @@ Route::middleware('auth')->group(function(){
 
     Route::resource('/category', App\Http\Controllers\CategoryController::class);
     Route::resource('/place', App\Http\Controllers\PlaceController::class);
-    Route::resource('/place/{place}/menu', App\Http\Controllers\PlaceMenuController::class);
+    Route::resource('/place/{place}/menu', App\Http\Controllers\PlaceMenuController::class)->scoped();
 
 });
