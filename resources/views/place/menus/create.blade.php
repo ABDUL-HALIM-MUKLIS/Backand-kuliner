@@ -33,7 +33,7 @@
                     <small class="invalid-feedback">{{ $message }}</small>
                     @enderror
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-2">
                     <label for="price">price</label>
                     <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" placeholder="Input price location" value="{{ old('price') }}">
                     @error('price')
@@ -47,20 +47,11 @@
                     <small class="invalid-feedback">{{ $message }}</small>
                     @enderror
                 </div>
-                
-                {{-- <div class="form-group mt-2">
-                    <label for="price">Price</label>
-                    <input type="text" name="price" class="form-control @error('price') is-invalid @enderror" placeholder="Input Price location" value="{{ old('price') }}">
-                    @error('price')
-                    <small class="invalid-feedback">{{ $message }}</small>
-                    @enderror
-                </div> --}}
-                
             </div>
             <div class="card-footer">
                 <div class="float-end mb-2">
                     <button type="submit" class="btn btn-primary">Save</button>
-                    <a href="{{ route('place.index') }}" class="btn btn-warning">Cancle</a>
+                    <a href="{{ route('menu.index',$place) }}" class="btn btn-warning">Cancle</a>
                 </div>
             </div>
         </form>

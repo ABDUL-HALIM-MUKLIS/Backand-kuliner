@@ -27,7 +27,7 @@ class PlaceController extends Controller
             })
             ->addColumn('place-menu', 'place.place-link')
             ->addColumn('action', 'place.dt-action')
-            ->rawColumns(['place-menu'],['action'])
+            ->rawColumns(['place-menu','action'])
             ->toJson();
         }
 
@@ -67,7 +67,7 @@ class PlaceController extends Controller
 
         $image = null;
         if($request->has('image')){
-            $image = $request->file('image')->store('images');
+            $image = $request->file('image')->store('images/tempat');
         }
 
         Place::create([
@@ -137,7 +137,7 @@ class PlaceController extends Controller
 
                 Storage::delete($place->image);
             }
-            $image = $request->file('image')->store('images');
+            $image = $request->file('image')->store('images/tempat');
         }
 
         Place::create([

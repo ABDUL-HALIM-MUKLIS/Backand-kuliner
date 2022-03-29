@@ -84,7 +84,7 @@
                     data: {
                         '_token': "{{csrf_token()}}"
                     },
-                    success: function(respone) {
+                    success: function(response) {
                         window.location.href = '/category'
                     },
                 })

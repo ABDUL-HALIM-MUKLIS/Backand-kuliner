@@ -44,7 +44,7 @@
             <h3>Are you sure to delete data ?</h3>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" id="conformDelete">Delete</button>
+            <button type="button" class="btn btn-danger" data-id="" id="conformDelete">Delete</button>
             <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">Close</button>
         </div>
         </div>
@@ -86,11 +86,11 @@
                 var id = $(this).data('id')
                 $.ajax({
                     type: 'DELETE',
-                    url: 'place/'+id,
+                    url: '/place/'+id,
                     data: {
                         '_token': "{{csrf_token()}}"
                     },
-                    success: function(respone) {
+                    success: function(response) {
                         window.location.href = '/place'
                     },
                 })

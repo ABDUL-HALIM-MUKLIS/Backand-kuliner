@@ -43,7 +43,7 @@
             <h3>Are you sure to delete data ?</h3>
         </div>
         <div class="modal-footer">
-            <button type="button" class="btn btn-danger" id="conformDelete">Delete</button>
+            <button type="button" class="btn btn-danger" data-id-place="" data-id-menu="" id="conformDelete">Delete</button>
             <button type="button" class="btn" data-bs-dismiss="modal" aria-label="Close">Close</button>
         </div>
         </div>
@@ -74,22 +74,25 @@
 
             $('#dataTable').on('click','a#delete', function(e){
                 e.preventDefault()
-                var id = $(this).data('id')
-                $('#conformDelete').attr('data-id',id)
+                var idplace = $(this).data('id-place')
+                var idmenu = $(this).data('id-menu')
+                $('#conformDelete').attr('data-id-place',idplace)
+                $('#conformDelete').attr('data-id-menu',idmenu)
                 $('#deleteModal').modal('show')
             });
 
             $('#conformDelete').click(function(e){
                 e.preventDefault()
-                var id = $(this).data('id')
+                var idplace = $(this).data('id-place')
+                var idmenu = $(this).data('id-menu')
                 $.ajax({
                     type: 'DELETE',
-                    url: 'place/'+id+'/menu',
+                    url: '/place/'+idplace+'/menu/'+idmenu,
                     data: {
                         '_token': "{{csrf_token()}}"
                     },
-                    success: function(respone) {
-                        window.location.href = '/place'
+                    success: function(response) {
+                        window.location.href = '/place/'+idplace+'/menu'
                     },
                 })
             });

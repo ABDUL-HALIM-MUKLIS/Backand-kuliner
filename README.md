@@ -225,3 +225,31 @@ public function run()
 > STEP 16 Membuat Hapus Data tempat kuliner sama seperti menghapus kategori
 > STEP 17 Membenearkan UX menu active,index data urut 123..., 
 > STEP 18 Membuat menu dari tempat kuliner
+> STEP 19 Membuat tambah data menu dan meng hendel penyimpanan file public
+- Pada folder config/filesystems ubah seperti di bawah
+```php
+    'public' => [
+            'driver' => 'local',
+            'root' => public_path(),  //<----------
+            'url' => env('APP_URL'),  //<----------
+            'visibility' => 'public',
+        ],
+```
+- Pada .env ubah 
+```env
+    BROADCAST_DRIVER=log
+    CACHE_DRIVER=file
+    FILESYSTEM_DRIVER=public    <---------
+    QUEUE_CONNECTION=sync
+    SESSION_DRIVER=file
+    SESSION_LIFETIME=120
+```
+
+> STEP 20 
+- Cara clear cach pada beberapa hal di laravel
+```
+    php artisan cache:clear
+    php artisan route:cache
+    php artisan config:cache
+    php artisan view:clear
+```

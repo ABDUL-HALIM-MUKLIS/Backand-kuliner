@@ -15,6 +15,8 @@ class Menu extends Model
         if($this->image){
             return asset($this->image);
         }
+
+        return asset('images/default.png');
     }
 
     public function place(){

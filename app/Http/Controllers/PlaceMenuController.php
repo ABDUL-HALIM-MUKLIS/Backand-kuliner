@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
 use App\Models\Place;
+use App\Models\Menu;
 use App\Models\categoris;
 
 class PlaceMenuController extends Controller
@@ -24,7 +26,7 @@ class PlaceMenuController extends Controller
                 return '<img src="'.$menu->image_url.'">';
             })
             ->addColumn('action','place.menus.dt-action')
-            ->rawColumns(['image'],['action'])
+            ->rawColumns(['image','action'])
             ->toJson();
         };
         return view('place.menus.index',[
@@ -52,14 +54,13 @@ class PlaceMenuController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Place $place)
+    public function store(Request $request, Place $place, Menu $menu)
     {
         $this->validate($request,[
-            'name' => 'required',
+            'name' => 'required','unique:menus,name,'.$menu->id,
             'description' => 'required',
             'categori_id' => 'required',
-            'price' => 'required',
-            'image' => 'required'
+            'price' => ['required','numeric'],
         ]);
         $image = null;
         if($request->hasFile('image')){
@@ -67,9 +68,9 @@ class PlaceMenuController extends Controller
         }
             $place->menus()->create([
                 'place_id' => $place->id,
+                'slug' => \Str::slug($request->name),
                 'categori_id' => $request->categori_id,
                 'name' => $request->name,
-                'slug' => \Str::slug($request->name),
                 'image' => $image,
                 'description' => $request->description,
                 'price' => $request->price,
@@ -100,9 +101,13 @@ class PlaceMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Place $place, Menu $menu)
     {
-        //
+        return view('place.menus.edit',[
+            'place' => $place,
+            'menu' => $menu,
+            'categoris' => categoris::get()
+        ]);
     }
 
     /**
@@ -112,9 +117,39 @@ class PlaceMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Place $place, Menu $menu)
     {
-        //
+        $this->validate($request,[
+            'name' => 'required',
+            'description' => 'required',
+            'categori_id' => 'required',
+            'price' => ['required','numeric'],
+        ]);
+
+        
+        $image = $menu->image;
+
+        if($request->hasFile('image')){
+            if(Storage::exists($image)){
+                Storage::delete($image);
+            }
+            $image = $request->file('image')->store('images/menus');
+        }
+
+        $menu->update([
+            'name' => $request->name ?? $menu->name,
+            'slug' => $request->name ? \Str::slug($request->name) : $menu->slug,
+            'description' => $request->description ?? $menu->description,
+            'categori_id' => $request->categori_id ?? $menu->categori_id,
+            'image' => $image,
+            'price' => $request->price ?? $menu->price,
+        ]);
+
+        return redirect()->route(
+            'menu.index',[
+                'place' => $place
+            ]
+        )->with('success','Menu berhasil diubah');
     }
 
     /**
@@ -123,8 +158,23 @@ class PlaceMenuController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Place $place, Menu $menu)
     {
-        //
+        if($menu){
+            if(Storage::exists($menu->image)){
+                Storage::delete($menu->image);
+            }
+            $menu->delete();
+
+            session()->flash('error','Menu berhasil dihapus');
+
+            return response()->json([
+                'success' => true,
+            ]);
+        }
+
+        return response()->json([
+                'success' => true,
+            ]);
     }
 }

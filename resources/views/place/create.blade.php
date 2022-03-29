@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group mt-2">
                     <label for="address">Address</label>
-                    <textarea name="address" rows="3" class="form-control @error('address') is-invalid @enderror" placeholder="Input address location" value="{{ old('address') }}"></textarea>
+                    <textarea name="address" rows="3" class="form-control @error('address') is-invalid @enderror" placeholder="Input address location">{{ old('address') }}</textarea>
                     @error('address')
                     <small class="invalid-feedback">{{ $message }}</small>
                     @enderror
