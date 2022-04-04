@@ -259,7 +259,7 @@ public function run()
 
 ```php
     Route::resource('/place/{place}/menu', App\Http\Controllers\PlaceMenuController::class)->scoped();
-``
+```
 > STEP 24 Membuat controler API
 - Membuat resaurce untuk api
 ```
