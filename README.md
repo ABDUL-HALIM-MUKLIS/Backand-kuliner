@@ -260,3 +260,14 @@ public function run()
 ```php
     Route::resource('/place/{place}/menu', App\Http\Controllers\PlaceMenuController::class)->scoped();
 ``
+> STEP 24 Membuat controler API
+- Membuat resaurce untuk api
+```
+     php artisan make:resource PlaceResource
+```
+
+> STEP 27 Membuat detail dari menu dan menambah keamanan scope
+```
+    Route::get('/place/{place:id}/menu/{menu:id}', ShowMenuController::class)->name('api.place.menu.show');
+```
+- Kemanan terletak pada {place:id} 

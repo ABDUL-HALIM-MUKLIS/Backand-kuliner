@@ -10,6 +10,14 @@ use App\Models\Menu;
 class Place extends Model
 {
     use HasFactory;
+    
+    public function getImageUrlAttribute() {
+        if ($this->image) {
+            return asset($this->image);
+        }
+
+        return 'https://via.placeholder.com/150';
+    }
 
     public function subDistrict(){
         return $this->belongsTo(SubDistrict::class);
