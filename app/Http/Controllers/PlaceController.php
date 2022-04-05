@@ -125,7 +125,6 @@ class PlaceController extends Controller
             'description' => ['required'],
             'address' => ['required'],
             'phone' => ['required','numeric'],
-            'image' => ['required','image'],
             'latitude' => ['required'],
             'longitude' => ['required'],
         ]);
@@ -140,12 +139,13 @@ class PlaceController extends Controller
             $image = $request->file('image')->store('images/tempat');
         }
 
-        Place::create([
+        $place->update([
             'sub_district_id' => $request->sub_district_id,
             'name' => $request->name,
             'description' => $request->description,
             'address' => $request->address,
             'phone' => $request->phone,
+            'image' => $image,
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
         ]);

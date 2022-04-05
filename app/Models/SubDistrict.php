@@ -11,4 +11,10 @@ class SubDistrict extends Model
 
 
     public $timestamp = false;
+
+    //relationship with place
+    public function places()
+    {
+        return $this->hasMany(Place::class);
+    }
 }

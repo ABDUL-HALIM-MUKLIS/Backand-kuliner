@@ -1,10 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Menu\ListMenuController;
 use App\Http\Controllers\Api\Menu\ShowMenuController;
 use App\Http\Controllers\Api\Place\ListPlaceController;
 use App\Http\Controllers\Api\Place\ShowPlaceController;
+use App\Http\Controllers\Api\SubDistrict\ListSubDistrictController;
+use App\Http\Controllers\Api\SubDistrict\ShowSubDistrictController;
+use App\Http\Controllers\Api\SubDistrict\ListPlaceBySubDisController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +24,13 @@ use App\Http\Controllers\Api\Place\ShowPlaceController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+//route post register user
+Route::post('/register', RegisterController::class);
+
+Route::get('/sub-district', ListSubDistrictController::class)->name('api.sub-district.list');
+Route::get('/sub-district/{subDistrict}', ShowSubDistrictController::class)->name('api.sub-district.show');
+Route::get('/sub-district/{subDistrict}/place', ListPlaceBySubDisController::class)->name('api.sub-district.place.list');
 
 Route::get('/place', ListPlaceController::class)->name('api.place.list');
 Route::get('/place/{place}', ShowPlaceController::class)->name('api.place.show');

@@ -271,3 +271,13 @@ public function run()
     Route::get('/place/{place:id}/menu/{menu:id}', ShowMenuController::class)->name('api.place.menu.show');
 ```
 - Kemanan terletak pada {place:id} 
+
+> STEP 31 Mengunakan sanctum pada laravel
+- Uncommet pada file kernel.php pada http hingga seperti gambar di bawah
+```php
+    'api' => [
+            \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
+            'throttle:api',
+            \Illuminate\Routing\Middleware\SubstituteBindings::class,
+        ],
+```
