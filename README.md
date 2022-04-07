@@ -283,3 +283,35 @@ public function run()
 ```
 > STEP 32 API Login
 > STEP 33 
+> STEP 38 Searching fiture
+- Digunakan pada controller
+```php
+    $places = Place::query();
+        if ($request->has('search')) {
+            $places->where('name', 'like', '%' . $request->search . '%')
+            ->orWhere('address', 'like', '%' . $request->search . '%')
+            ->orWhere('description', 'like', '%' . $request->search . '%')
+            ->orWherehas('subDistrict', function ($query) use ($request) {
+                $query->where('name', 'like', '%' . $request->search . '%');
+            });
+        }
+        return PlaceResource::collection($places->paginate(10));
+```
+
+> STEP 39 SCOPE
+- Digunakan pada Scope pada model 'Plaece'
+```php
+    public function ScopeSearchPlace(Builder $builder, $search){
+        
+        return $builder->where('name', 'like', '%' . $search . '%')
+        ->orWhere('address', 'like', '%' . $search . '%')
+        ->orWhere('description', 'like', '%' . $search . '%')
+        ->orWhereHas('subDistrict', function ($query) use ($search) {
+            $query->where('name', 'like', '%' . $search . '%');
+        });
+    }
+```
+- penerapan scope pada model 'Place' dan di gunakan pada controller
+```php
+    $place = Place::searchPlace($request->search);
+```

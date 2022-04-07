@@ -17,7 +17,10 @@ class ListPlaceController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $places = Place::paginate(10);
-        return PlaceResource::collection($places);
+        $places = Place::query();
+        if ($request->has('search')) {
+            $places->searchPlace($request->search);
+        }
+        return PlaceResource::collection($places->paginate(10));
     }
 }
